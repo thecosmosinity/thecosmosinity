@@ -1,0 +1,7 @@
+- 👋 Hi, I’m @thecosmosinity
+- 👀 I’m interested in: le foot
+- 🌱 I’m currently learning: ms and python
+- 💞️ I’m looking to collaborate on: anything really
+- 📫 How to reach me : cosmosinity@gmail.com
+- 😄 Pronouns: he/him
+- ⚡ Fun fact: i'm alive
