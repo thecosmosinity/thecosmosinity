@@ -1,7 +1,2 @@
-- 👋 Hi, I’m @thecosmosinity
-- 👀 I’m interested in: le foot
-- 🌱 I’m currently learning: ms and python
-- 💞️ I’m looking to collaborate on: anything really
-- 📫 How to reach me : cosmosinity@gmail.com
-- 😄 Pronouns: he/him
-- ⚡ Fun fact: i'm alive
+- source code for my website
+- email @ cosmosinity@gmail.com, or gamblersim@proton.me for any removal reqs, or just to reach out...
