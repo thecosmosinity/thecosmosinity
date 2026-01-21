@@ -1,0 +1,131 @@
+<link rel="icon" href="static/useful/icon.png" type="image/png">
+<link rel="stylesheet" href="main.css">
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #111;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    #test-area {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s;
+    }
+
+    /* Top Right Controls */
+    .controls {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+    /* Timer in bottom right */
+    #timer {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        color: gray;
+        font-size: 24px;
+        font-weight: bold;
+        display: none;
+        text-shadow: 1px 1px 2px black;
+    }
+
+    .hidden { display: none !important; }
+</style>
+
+<div class="controls">
+    <a href="index.html">
+        <button class="osx">go back</button>
+    </a>
+    <button id="fullscreen-btn" class="osx">1. Enter Fullscreen</button>
+    <button id="start-btn" class="osx hidden">2. Start Test</button>
+</div>
+
+<div id="test-area">
+    <h2 id="msg" style="color: white;">Please Enter Fullscreen to Begin</h2>
+</div>
+
+<div id="timer">10</div>
+
+<script>
+    const testArea = document.getElementById('test-area');
+    const startBtn = document.getElementById('start-btn');
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const msg = document.getElementById('msg');
+    const timerDisplay = document.getElementById('timer');
+    
+    const colors = ['red', 'green', 'blue', 'white'];
+    let currentColorIndex = 0;
+    let timeLeft = 10;
+    let timerInterval;
+
+    // Handle Fullscreen requirement
+    fsBtn.addEventListener('click', () => {
+        document.documentElement.requestFullscreen().catch(err => {
+            alert("Error attempting to enable full-screen mode");
+        });
+    });
+
+    // Detect when fullscreen is entered
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            startBtn.classList.remove('hidden');
+            msg.innerText = "Ready to test pixels";
+        } else {
+            // Reset if user exits fullscreen
+            location.reload();
+        }
+    });
+
+    startBtn.addEventListener('click', () => {
+        startBtn.classList.add('hidden');
+        msg.classList.add('hidden');
+        timerDisplay.style.display = 'block';
+        runTest();
+    });
+
+    function runTest() {
+        if (currentColorIndex >= colors.length) {
+            timerDisplay.innerText = "DONE";
+            testArea.style.backgroundColor = "#111";
+            msg.innerText = "Test Complete";
+            msg.classList.remove('hidden');
+            return;
+        }
+
+        // Set the background color
+        testArea.style.backgroundColor = colors[currentColorIndex];
+        
+        // Reset timer
+        timeLeft = 10;
+        timerDisplay.innerText = timeLeft;
+
+        // Start countdown
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerDisplay.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                currentColorIndex++;
+                runTest();
+            }
+        }, 1000);
+    }
+</script>

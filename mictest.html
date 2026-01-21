@@ -1,0 +1,44 @@
+<link rel="icon" href="static/useful/icon.png" type="image/png">
+<link rel="stylesheet" href="main.css">
+<title>mic</title>
+
+<style>
+    .meter-container { width: 300px; height: 30px; background: #333; margin: 20px auto; border-radius: 15px; border: 2px solid #555; overflow: hidden; }
+    #bar { width: 0%; height: 100%; background: linear-gradient(to right, #2ecc71, #f1c40f, #e74c3c); transition: width 0.05s; }
+</style>
+
+<div style="text-align: center; padding-top: 50px;">
+    <h1>Microphone Tester</h1>
+    
+    <div class="meter-container">
+        <div id="bar"></div>
+    </div>
+    
+    <button class="osx" onclick="initMic()">Turn On Mic</button>
+    <br><br>
+
+    <a href="index.html">
+        <button class="osx">go back</button>
+    </a>
+</div>
+
+<script>
+async function initMic() {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const audioContext = new AudioContext();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaStreamSource(stream);
+    source.connect(analyser);
+    analyser.fftSize = 256;
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    function draw() {
+        analyser.getByteFrequencyData(dataArray);
+        let sum = dataArray.reduce((a, b) => a + b, 0);
+        let vol = sum / dataArray.length;
+        document.getElementById('bar').style.width = vol * 1.2 + "%";
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+</script>

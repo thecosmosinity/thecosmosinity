@@ -1,0 +1,30 @@
+<link rel="icon" href="static/useful/icon.png" type="image/png">
+<link rel="stylesheet" href="main.css">
+
+<style>
+    .keyboard-container { display: grid; grid-template-columns: repeat(30, 30px); gap: 5px; background: #222; padding: 20px; border-radius: 10px; justify-content: center; }
+    .key { width: 40px; height: 40px; background: #444; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-size: 10px; font-family: sans-serif; transition: 0.1s; }
+    .key.active { background: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+    .row { display: flex; gap: 5px; margin-bottom: 5px; justify-content: center; }
+</style>
+
+<div style="text-align: center; padding-top: 50px;">
+    <h1>Keyboard Tester</h1>
+    <div id="keyboard">
+        <p>Press any key on your keyboard to test it.</p>
+        <h2 id="last-key" style="color: #2ecc71; height: 30px;"></h2>
+    </div>
+
+    <a href="index.html">
+        <button class="osx">go back</button>
+    </a>
+</div>
+
+<script>
+    const lastKeyDisplay = document.getElementById('last-key');
+    window.addEventListener('keydown', (e) => {
+        e.preventDefault();
+        // Shows the name of the key you just pressed
+        lastKeyDisplay.innerText = `Key Pressed: ${e.code}`;
+    });
+</script>
